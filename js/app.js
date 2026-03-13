@@ -771,8 +771,10 @@ function _setupCalListeners(grid, anio, mes) {
     paintDay(parseInt(cell.dataset.day));
   }, { signal: sig, passive: false });
 
-  document.addEventListener('mouseup',  () => { calState.painting = false; }, { signal: sig });
-  document.addEventListener('touchend', () => { calState.painting = false; }, { signal: sig });
+  const stopPainting = () => { calState.painting = false; };
+  document.addEventListener('mouseup',    stopPainting, { signal: sig });
+  document.addEventListener('touchend',   stopPainting, { signal: sig });
+  document.addEventListener('touchcancel', stopPainting, { signal: sig }); // evita estado 'painting' atascado
 }
 
 /**
